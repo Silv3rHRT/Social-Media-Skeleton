@@ -21,14 +21,14 @@ const reactionSchema = new Schema<IReaction>({
       return new Date(createdAt).toDateString();
     },
   },
-  {
+},
+    {
     toJSON: {
       getters: true,
     },
     timestamps: true,
     id: false,
-  }
-});
+  });
 
 interface IThoughtIThawAPuttyCat extends Document {
   thoughtText: string;
@@ -57,12 +57,14 @@ const thoughtSchema = new Schema<IThoughtIThawAPuttyCat>({
   },
   id: false,
   toObject: { getters: true },
-  timestamps: false
+  timestamps: false,
+},
 );
 
 thoughtSchema.virtual("reactionCount").get(function() {
   return this.reactions.length;
 }
+);
 
 const Thought = model<IThoughtIThawAPuttyCat>("Thought", thoughtSchema);
 
