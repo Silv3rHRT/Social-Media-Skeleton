@@ -32,12 +32,10 @@ export const getThoughtById = async(req: Request, res: Response) => {
 }
 
 export const createThought = async(req: Request, res: Response) => {
-    const { thought } = req.body;
+    const {thoughtText, username, userId} = req.body;
     try{
-        const newThought = await Thought.create({
-            thought
-        })
-        res.status(201).json(newThought);
+        const newThought = await Thought.create({thoughtText, username, userId});
+        res.json(newThought);
     } catch (e:any){
         res.status(400).json({
             message: e.message
@@ -67,7 +65,7 @@ export const updateThought = async (req: Request, res: Response) => {
 
   export const deleteThought= async (req: Request, res: Response) => {
     try {
-      const thought = await Thought.findOneAndDelete({ _id: req.params.courseId});
+      const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId});
       
       if(!thought) {
         res.status(404).json({

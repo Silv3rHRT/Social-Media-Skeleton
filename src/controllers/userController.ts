@@ -32,11 +32,9 @@ export const getUserById = async(req: Request, res: Response) => {
 }
 
 export const createUser = async(req: Request, res: Response) => {
-    const { user } = req.body;
+    const {username, email} = req.body;
     try{
-        const newUser = await User.create({
-            user
-        })
+        const newUser = await User.create({username, email});
         res.json(newUser);
     } catch (e:any){
         res.status(409).json({
@@ -67,7 +65,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
   export const deleteUser= async (req: Request, res: Response) => {
     try {
-      const user = await User.findOneAndDelete({ _id: req.params.courseId});
+      const user = await User.findOneAndDelete({ _id: req.params.userId});
       
       if(!user) {
         res.status(404).json({
@@ -76,7 +74,7 @@ export const updateUser = async (req: Request, res: Response) => {
         return;
       }
       res.json({
-        message: 'Deleted the user and all reated reactions, congratulations dummy!'
+        message: 'Deleted the user congratulations dummy!'
       })
     } catch (error: any) {
       res.status(500).json({
